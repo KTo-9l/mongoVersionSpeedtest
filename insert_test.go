@@ -5,12 +5,12 @@ import (
 	"context"
 	"fmt"
 	"io"
+	"log"
 	"os"
 	"testing"
 	"time"
 
 	"go.mongodb.org/mongo-driver/v2/bson"
-	"go.mongodb.org/mongo-driver/v2/mongo"
 	"go.mongodb.org/mongo-driver/v2/mongo/options"
 )
 
@@ -20,6 +20,18 @@ type myFile struct {
 	EditDate time.Time `bson:"editDate"`
 	Count    int       `bson:"count"`
 	Updated  bool      `bson:"updated,omitempty"`
+}
+
+func run1000(b *testing.B, f func(id string)) {
+	for i := 1; i <= 1000; i++ {
+		f(fmt.Sprintf("fafa%d", i))
+	}
+}
+
+func run1000WithoutArgs(b *testing.B, f func()) {
+	for i := 1; i <= 1000; i++ {
+		f()
+	}
 }
 
 func fBenchmarkInsertOne(b *testing.B) {
@@ -80,13 +92,13 @@ func fBenchmarkInsertManyMillion(b *testing.B) {
 	}
 }
 
-func fBenchmarkUpdateOne(b *testing.B) {
-	filter := bson.M{"count": 10}
+func fBenchmarkUpdateOne(id string) {
+	filter := bson.M{"_id": id}
 	update := bson.M{"$set": bson.M{"updated": true}}
 
 	_, err := coll.UpdateOne(context.TODO(), filter, update)
 	if err != nil {
-		b.Error("Error UpdateOne:", err)
+		panic(err)
 	}
 }
 
@@ -128,68 +140,42 @@ func fBenchmarkFindOne(b *testing.B) {
 	}
 }
 
-func fBenchmarkFindOneByIdWithoutDeserialization(b *testing.B) {
-	result := coll.FindOne(context.TODO(), bson.M{"_id": "fafa5"})
+func fBenchmarkFindOneByIdWithoutDeserialization(id string) {
+	result := coll.FindOne(context.TODO(), bson.M{"_id": id})
 	if result.Err() != nil {
-		b.Error("Error FindOne:", result.Err())
+		log.Println("Error FindOne:", result.Err())
 	}
 }
 
-func fBenchmarkFindOneByIdWithDeserialization(b *testing.B) {
+func fBenchmarkFindOneByIdWithDeserialization(id string) {
 	var file myFile
 
-	b.ResetTimer()
-
-	err := coll.FindOne(context.TODO(), bson.M{"_id": "fafa5"}).Decode(&file)
+	err := coll.FindOne(context.TODO(), bson.M{"_id": id}).Decode(&file)
 	if err != nil {
-		b.Error("Error FindOne:", err)
+		log.Println("Error FindOne:", err)
 	}
 }
 
-func fBenchmarkFindManyUsingIndexWithoutDeserialization(b *testing.B) {
-	indexModel := mongo.IndexModel{
-		Keys: bson.D{{"count", 1}},
-	}
+func fBenchmarkFindManyUsingIndexWithoutDeserialization() {
+	filter := bson.M{"updated": true}
 
-	indexName, err := coll.Indexes().CreateOne(context.TODO(), indexModel)
+	_, err := coll.Find(context.TODO(), filter)
 	if err != nil {
-		b.Error("Error creating index:", err)
-	}
-
-	b.ResetTimer()
-
-	filter := bson.M{"count": bson.M{"$lt": 5}}
-	opts := options.Find().SetHint(indexName)
-
-	_, err = coll.Find(context.TODO(), filter, opts)
-	if err != nil {
-		b.Error("Error BenchmarkFindManyUsingIndexWithoutDeserialization:", err)
+		log.Println("Error BenchmarkFindManyUsingIndexWithoutDeserialization:", err)
 	}
 }
 
-func fBenchmarkFindManyUsingIndexWithDeserialization(b *testing.B) {
-	indexModel := mongo.IndexModel{
-		Keys: bson.D{{"count", 1}},
-	}
+func fBenchmarkFindManyUsingIndexWithDeserialization() {
+	filter := bson.M{"updated": true}
 
-	indexName, err := coll.Indexes().CreateOne(context.TODO(), indexModel)
+	cursor, err := coll.Find(context.TODO(), filter)
 	if err != nil {
-		b.Error("Error creating index:", err)
-	}
-
-	b.ResetTimer()
-
-	filter := bson.M{"count": bson.M{"$lt": 5}}
-	opts := options.Find().SetHint(indexName)
-
-	cursor, err := coll.Find(context.TODO(), filter, opts)
-	if err != nil {
-		b.Error("Error BenchmarkFindManyUsingIndexWithDeserialization:", err)
+		log.Println("Error BenchmarkFindManyUsingIndexWithDeserialization:", err)
 	}
 
 	var files []myFile
 	if err = cursor.All(context.TODO(), &files); err != nil {
-		b.Error("Error decoding:", err)
+		log.Println("Error decoding:", err)
 	}
 }
 
@@ -310,9 +296,11 @@ func fBenchmarkGridFSSearchAndDownloadToInputStream(b *testing.B) {
 	bucket := db.GridFSBucket()
 	b.ResetTimer()
 
-	fileBuffer := bytes.NewBuffer(nil)
-	if _, err := bucket.DownloadToStreamByName(context.TODO(), "fileForInsert.txt", fileBuffer); err != nil {
-		b.Error(err)
+	for range 1000 {
+		fileBuffer := bytes.NewBuffer(nil)
+		if _, err := bucket.DownloadToStreamByName(context.TODO(), "fileForInsert.txt", fileBuffer); err != nil {
+			b.Error(err)
+		}
 	}
 }
 
@@ -320,13 +308,15 @@ func fBenchmarkGridFSSearchAndDownloadToOutputStream(b *testing.B) {
 	bucket := db.GridFSBucket()
 	b.ResetTimer()
 
-	downloadStream, err := bucket.OpenDownloadStreamByName(context.TODO(), "fileForInsert.txt")
-	if err != nil {
-		b.Error(err)
-	}
-	fileBytes := make([]byte, 1024)
-	if _, err := downloadStream.Read(fileBytes); err != nil {
-		b.Error(err)
+	for range 1000 {
+		downloadStream, err := bucket.OpenDownloadStreamByName(context.TODO(), "fileForInsert.txt")
+		if err != nil {
+			b.Error(err)
+		}
+		fileBytes := make([]byte, 1024)
+		if _, err := downloadStream.Read(fileBytes); err != nil {
+			b.Error(err)
+		}
 	}
 }
 

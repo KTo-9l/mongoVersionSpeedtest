@@ -1,0 +1,85 @@
+Connected to Mongo80
+goos: linux
+goarch: amd64
+pkg: mongoVersionSpeedTest
+cpu: AMD Ryzen 5 5600H with Radeon Graphics         
+BenchmarkMongo80/InsertManyMillion:-12         	       1	5540914649 ns/op
+BenchmarkMongo80/UpdateOne:-12                 	       1	 141837456 ns/op
+BenchmarkMongo80/FindOneByIdWithoutDeserialization:-12         	       1	  96319188 ns/op
+BenchmarkMongo80/FindOneByIdWithDeserialization:-12            	       1	 107917382 ns/op
+BenchmarkMongo80/FindOneByIdWithoutDeserialization:#01-12      	       1	 211315164 ns/op
+BenchmarkMongo80/FindOneByIdWithDeserialization:#01-12         	       1	3372770273 ns/op
+BenchmarkMongo80/DeleteAll:-12                                 	       1	    345437 ns/op
+BenchmarkMongo80/GridFS_Upload_from_stream:-12                 	       1	1592421712 ns/op
+BenchmarkMongo80/GridFS_Search_&_Download_to_InputStream:-12   	       1	 461484807 ns/op
+BenchmarkMongo80/Clear_GridFS_DB:-12                           	       1	    543733 ns/op
+PASS
+ok  	mongoVersionSpeedTest	13.183s
+Connected to Mongo80
+goos: linux
+goarch: amd64
+pkg: mongoVersionSpeedTest
+cpu: AMD Ryzen 5 5600H with Radeon Graphics         
+BenchmarkMongo80/InsertManyMillion:-12         	       1	5519418962 ns/op
+BenchmarkMongo80/UpdateOne:-12                 	       1	 126573300 ns/op
+BenchmarkMongo80/FindOneByIdWithoutDeserialization:-12         	       1	 100035970 ns/op
+BenchmarkMongo80/FindOneByIdWithDeserialization:-12            	       1	 106107270 ns/op
+BenchmarkMongo80/FindOneByIdWithoutDeserialization:#01-12      	       1	 211969022 ns/op
+BenchmarkMongo80/FindOneByIdWithDeserialization:#01-12         	       1	3951514418 ns/op
+BenchmarkMongo80/DeleteAll:-12                                 	       1	    405481 ns/op
+BenchmarkMongo80/GridFS_Upload_from_stream:-12                 	       1	1717053461 ns/op
+BenchmarkMongo80/GridFS_Search_&_Download_to_InputStream:-12   	       1	 445451681 ns/op
+BenchmarkMongo80/Clear_GridFS_DB:-12                           	       1	    569733 ns/op
+PASS
+ok  	mongoVersionSpeedTest	13.826s
+Connected to Mongo80
+goos: linux
+goarch: amd64
+pkg: mongoVersionSpeedTest
+cpu: AMD Ryzen 5 5600H with Radeon Graphics         
+BenchmarkMongo80/InsertManyMillion:-12         	       1	5486522211 ns/op
+BenchmarkMongo80/UpdateOne:-12                 	       1	 134611525 ns/op
+BenchmarkMongo80/FindOneByIdWithoutDeserialization:-12         	       1	  93787762 ns/op
+BenchmarkMongo80/FindOneByIdWithDeserialization:-12            	       1	 102793679 ns/op
+BenchmarkMongo80/FindOneByIdWithoutDeserialization:#01-12      	       1	 212795028 ns/op
+BenchmarkMongo80/FindOneByIdWithDeserialization:#01-12         	       1	3399336895 ns/op
+BenchmarkMongo80/DeleteAll:-12                                 	       1	    426892 ns/op
+BenchmarkMongo80/GridFS_Upload_from_stream:-12                 	       1	1579277235 ns/op
+BenchmarkMongo80/GridFS_Search_&_Download_to_InputStream:-12   	       1	 458478853 ns/op
+BenchmarkMongo80/Clear_GridFS_DB:-12                           	       1	    653672 ns/op
+PASS
+ok  	mongoVersionSpeedTest	13.152s
+Connected to Mongo80
+goos: linux
+goarch: amd64
+pkg: mongoVersionSpeedTest
+cpu: AMD Ryzen 5 5600H with Radeon Graphics         
+BenchmarkMongo80/InsertManyMillion:-12         	       1	5523711640 ns/op
+BenchmarkMongo80/UpdateOne:-12                 	       1	 124689434 ns/op
+BenchmarkMongo80/FindOneByIdWithoutDeserialization:-12         	       1	  94645670 ns/op
+BenchmarkMongo80/FindOneByIdWithDeserialization:-12            	       1	 105692417 ns/op
+BenchmarkMongo80/FindOneByIdWithoutDeserialization:#01-12      	       1	 210576686 ns/op
+BenchmarkMongo80/FindOneByIdWithDeserialization:#01-12         	       1	3980570086 ns/op
+BenchmarkMongo80/DeleteAll:-12                                 	       1	    388438 ns/op
+BenchmarkMongo80/GridFS_Upload_from_stream:-12                 	       1	1786948442 ns/op
+BenchmarkMongo80/GridFS_Search_&_Download_to_InputStream:-12   	       1	 458676327 ns/op
+BenchmarkMongo80/Clear_GridFS_DB:-12                           	       1	    615570 ns/op
+PASS
+ok  	mongoVersionSpeedTest	13.948s
+Connected to Mongo80
+goos: linux
+goarch: amd64
+pkg: mongoVersionSpeedTest
+cpu: AMD Ryzen 5 5600H with Radeon Graphics         
+BenchmarkMongo80/InsertManyMillion:-12         	       1	5520670693 ns/op
+BenchmarkMongo80/UpdateOne:-12                 	       1	 124225850 ns/op
+BenchmarkMongo80/FindOneByIdWithoutDeserialization:-12         	       1	  96211855 ns/op
+BenchmarkMongo80/FindOneByIdWithDeserialization:-12            	       1	 106559322 ns/op
+BenchmarkMongo80/FindOneByIdWithoutDeserialization:#01-12      	       1	 213376002 ns/op
+BenchmarkMongo80/FindOneByIdWithDeserialization:#01-12         	       1	3983387627 ns/op
+BenchmarkMongo80/DeleteAll:-12                                 	       1	    432943 ns/op
+BenchmarkMongo80/GridFS_Upload_from_stream:-12                 	       1	1730293704 ns/op
+BenchmarkMongo80/GridFS_Search_&_Download_to_InputStream:-12   	       1	 456224236 ns/op
+BenchmarkMongo80/Clear_GridFS_DB:-12                           	       1	    632271 ns/op
+PASS
+ok  	mongoVersionSpeedTest	13.955s
