@@ -62,10 +62,10 @@ func fBenchmarkMongo80(b *testing.B) {
 		b.Error("Error creating index:", err)
 	}
 
-	b.Run("FindOneByIdWithoutDeserialization:", func(b *testing.B) {
+	b.Run("FindManyUsingIndexWithoutDeserialization:", func(b *testing.B) {
 		run1000WithoutArgs(b, fBenchmarkFindManyUsingIndexWithoutDeserialization)
 	})
-	b.Run("FindOneByIdWithDeserialization:", func(b *testing.B) {
+	b.Run("FindManyUsingIndexWithDeserialization:", func(b *testing.B) {
 		run1000WithoutArgs(b, fBenchmarkFindManyUsingIndexWithDeserialization)
 	})
 
